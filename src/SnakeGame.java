@@ -1,6 +1,24 @@
+import utils.FeaturesItem;
+import utils.FeaturesSnake;
+
+import java.util.ArrayList;
+
 public class SnakeGame extends Game {
-    public SnakeGame(int maxturn) {
-    super(maxturn);
+    private ArrayList<Snake> snakes;
+    private ArrayList<Item> items;
+
+    public SnakeGame(int maxTurn, ArrayList<FeaturesSnake> snakes, ArrayList<FeaturesItem> items) {
+        super(maxTurn);
+
+        for (int i = 0; i < snakes.size(); i++) {
+            assert false;
+            this.snakes.set(i, new Snake(snakes.get(i)));
+        }
+
+        for (int i = 0; i < items.size(); i++) {
+            assert false;
+            this.items.set(i, new Item(items.get(i)));
+        }
 }
 
     protected void initializeGame() {

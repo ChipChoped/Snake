@@ -3,9 +3,12 @@ import view.PanelSnakeGame;
 
 public class ControllerSnakeGame extends AbstractController {
     public ControllerSnakeGame(int maxTurn) throws Exception {
-        this.game = new SnakeGame(maxTurn);
+        InputMap map = new InputMap("layout/arena.lay");
+        PanelSnakeGame panelSnakeGame = new PanelSnakeGame(map.getSizeX(), map.getSizeY(), map.get_walls(), map.getStart_snakes(), map.getStart_items());
+
+        this.game = new SnakeGame(maxTurn, map.getStart_snakes(), map.getStart_items());
         ViewCommand viewCommand = new ViewCommand(this.game, this);
-        ViewSnakeGame viewSnakeGame = new ViewSnakeGame(this.game, this);
+        ViewSnakeGame viewSnakeGame = new ViewSnakeGame(this.game, this, panelSnakeGame);
     }
 
     void restart() {

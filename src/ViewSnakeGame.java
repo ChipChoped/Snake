@@ -9,7 +9,7 @@ import java.util.Observer;
 public class ViewSnakeGame implements Observer {
     protected AbstractController controller;
 
-    public ViewSnakeGame(Observable obs, AbstractController controller) {
+    public ViewSnakeGame(Observable obs, AbstractController controller, PanelSnakeGame panelSnakeGame) {
         obs.addObserver(this);
         this.controller = controller;
 
@@ -27,8 +27,6 @@ public class ViewSnakeGame implements Observer {
         frame.setLocation(dx,dy);
 
         try {
-            InputMap map = new InputMap("layout/arena.lay");
-            PanelSnakeGame panelSnakeGame = new PanelSnakeGame(map.getSizeX(), map.getSizeY(), map.get_walls(), map.getStart_snakes(), map.getStart_items());
             frame.add(panelSnakeGame);
         }
         catch (Exception exception) {
