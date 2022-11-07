@@ -122,7 +122,7 @@ public class ViewCommand implements Observer {
     }
 
     public void update(Observable observable, Object o) {
-        SimpleGame game = (SimpleGame) observable;
+        SnakeGame game = (SnakeGame) observable;
         turnNumberLabel.setText("Turn : " + game.getTurn());
         //turnNumberLabel = new JLabel("Turn : " + controller.getGame().getTurn(), JLabel.CENTER);
     }

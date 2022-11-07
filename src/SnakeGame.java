@@ -1,2 +1,29 @@
-public class SnakeGame {
+public class SnakeGame extends Game {
+    public SnakeGame(int maxturn) {
+    super(maxturn);
+}
+
+    protected void initializeGame() {
+        this.turn = 0;
+        this.isRunning = false;
+        this.time = 100;
+
+        setChanged();
+        notifyObservers();
+    }
+
+    protected void takeTurn() {
+
+    }
+
+    protected boolean gameContinue() {
+        return turn != maxturn;
+    }
+
+    protected void gameOver() {
+        System.out.println("Game Over!");
+
+        setChanged();
+        notifyObservers();
+    }
 }
