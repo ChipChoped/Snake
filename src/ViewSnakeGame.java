@@ -22,7 +22,7 @@ public class ViewSnakeGame implements Observer {
         Dimension windowSize = frame.getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();
-        int dx = centerPoint.x - windowSize.width /2;
+        int dx = centerPoint.x - windowSize.width / 2;
         int dy = centerPoint.y - windowSize.height / 2 - 350;
         frame.setLocation(dx,dy);
 
