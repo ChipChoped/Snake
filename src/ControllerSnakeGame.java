@@ -2,9 +2,6 @@ import model.InputMap;
 import view.PanelSnakeGame;
 
 public class ControllerSnakeGame extends AbstractController {
-    InputMap map;
-    PanelSnakeGame panelSnakeGame;
-
     public ControllerSnakeGame(int maxTurn) throws Exception {
         this.game = new SnakeGame(maxTurn);
         ViewCommand viewCommand = new ViewCommand(this.game, this);
