@@ -19,10 +19,18 @@ public class NormalBehavior implements Behavior {
             ArrayList<Position> positions = snake.getPositions();
 
             switch (action) {
-                case MOVE_UP -> positions.get(0).setY(positions.get(0).getY() - 1);
-                case MOVE_DOWN -> positions.get(0).setY(positions.get(0).getY() + 1);
-                case MOVE_LEFT -> positions.get(0).setX(positions.get(0).getX() - 1);
-                case MOVE_RIGHT -> positions.get(0).setX(positions.get(0).getX() + 1);
+                case MOVE_UP:
+                    positions.get(0).setY(positions.get(0).getY() - 1);
+                    break;
+                case MOVE_DOWN:
+                    positions.get(0).setY(positions.get(0).getY() + 1);
+                    break;
+                case MOVE_LEFT:
+                    positions.get(0).setX(positions.get(0).getX() - 1);
+                    break;
+                case MOVE_RIGHT:
+                    positions.get(0).setX(positions.get(0).getX() + 1);
+                    break;
             }
 
             snake.setPositions(positions);
