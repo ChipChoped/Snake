@@ -17,4 +17,6 @@ public class Snake extends FeaturesSnake {
         super(snake.getPositions(), snake.getLastAction(), snake.getColorSnake(), snake.isInvincible(), snake.isSick());
         behavior = new NormalBehavior();
     }
+
+    public Behavior getBehavior() { return behavior; }
 }
