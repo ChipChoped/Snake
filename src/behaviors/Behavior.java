@@ -1,4 +1,4 @@
-package Behaviors;
+package behaviors;
 
 import utils.Position;
 import java.util.ArrayList;
