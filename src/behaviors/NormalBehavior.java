@@ -1,7 +1,10 @@
 package behaviors;
 
 import utils.AgentAction;
+import utils.Position;
 import utils.Snake;
+
+import java.util.ArrayList;
 
 public class NormalBehavior implements Behavior {
     public boolean isLegalMove(Snake snake, AgentAction action) {
@@ -12,6 +15,17 @@ public class NormalBehavior implements Behavior {
     }
 
     public void moveAgent(Snake snake, AgentAction action) {
+        if (isLegalMove(snake, action)) {
+            ArrayList<Position> positions = snake.getPositions();
 
+            switch (action) {
+                case MOVE_UP -> positions.get(0).setY(positions.get(0).getY() - 1);
+                case MOVE_DOWN -> positions.get(0).setY(positions.get(0).getY() + 1);
+                case MOVE_LEFT -> positions.get(0).setX(positions.get(0).getX() - 1);
+                case MOVE_RIGHT -> positions.get(0).setX(positions.get(0).getX() + 1);
+            }
+
+            snake.setPositions(positions);
+        }
     }
 }
