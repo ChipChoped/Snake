@@ -9,15 +9,17 @@ public class SnakeGame extends Game {
 
     public SnakeGame(int maxTurn, ArrayList<FeaturesSnake> snakes, ArrayList<FeaturesItem> items) {
         super(maxTurn);
+        this.snakes = new ArrayList<>();
+        this.items = new ArrayList<>();
 
-        for (int i = 0; i < snakes.size(); i++) {
+        for (FeaturesSnake snake : snakes) {
             assert false;
-            this.snakes.set(i, new Snake(snakes.get(i)));
+            this.snakes.add(new Snake(snake));
         }
 
-        for (int i = 0; i < items.size(); i++) {
+        for (FeaturesItem item : items) {
             assert false;
-            this.items.set(i, new Item(items.get(i)));
+            this.items.add(new Item(item));
         }
 }
 
