@@ -1,15 +1,14 @@
 package behaviors;
 
-import utils.Position;
-import java.util.ArrayList;
+import utils.AgentAction;
 import utils.Snake;
 
 public class NormalBehavior implements Behavior {
-    public boolean isLegalMove(Snake snake, ArrayList<Position> positions) {
+    public boolean isLegalMove(Snake snake, AgentAction action) {
         return false;
     }
 
-    public void moveAgent(Snake snake, ArrayList<Position> positions) {
+    public void moveAgent(Snake snake, AgentAction action) {
 
     }
 }
