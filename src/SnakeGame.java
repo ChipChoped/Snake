@@ -1,5 +1,7 @@
 import utils.FeaturesItem;
 import utils.FeaturesSnake;
+import utils.Item;
+import utils.Snake;
 
 import java.util.ArrayList;
 
