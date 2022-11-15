@@ -1,3 +1,5 @@
+package utils;
+
 import utils.AgentAction;
 import utils.ColorSnake;
 import utils.FeaturesSnake;
