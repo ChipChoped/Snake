@@ -7,22 +7,27 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SnakeGame extends Game {
+    private ArrayList<Snake> initialSnakes;
+    private ArrayList<Item> initialItems;
+
     private ArrayList<Snake> snakes;
     private ArrayList<Item> items;
 
     public SnakeGame(int maxTurn, ArrayList<FeaturesSnake> snakes, ArrayList<FeaturesItem> items) {
         super(maxTurn);
+        this.initialSnakes = new ArrayList<>();
+        this.initialItems = new ArrayList<>();
         this.snakes = new ArrayList<>();
         this.items = new ArrayList<>();
 
         for (FeaturesSnake snake : snakes) {
             assert false;
-            this.snakes.add(new Snake(snake));
+            this.initialSnakes.add(new Snake(snake));
         }
 
         for (FeaturesItem item : items) {
             assert false;
-            this.items.add(new Item(item));
+            this.initialItems.add(new Item(item));
         }
 }
 
@@ -48,6 +53,9 @@ public class SnakeGame extends Game {
         this.turn = 0;
         this.isRunning = false;
         this.time = 100;
+
+        this.snakes = this.initialSnakes;
+        this.items = this.initialItems;
 
         setChanged();
         notifyObservers();
