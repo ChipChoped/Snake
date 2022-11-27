@@ -37,6 +37,8 @@ public class ViewSnakeGame implements Observer {
         catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
+
+        this.controller.getGame().initializeGame();
     }
     
     public void update(Observable observable, Object o) {
