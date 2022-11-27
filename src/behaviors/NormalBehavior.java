@@ -14,9 +14,17 @@ public class NormalBehavior implements Behavior {
                 (action == AgentAction.MOVE_RIGHT && snake.getLastAction() != AgentAction.MOVE_LEFT));
     }
 
-    public void moveAgent(Snake snake, AgentAction action) {
+    public boolean isEliminated(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
+        return false;
+
+    }
+
+    public void moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
         if (isLegalMove(snake, action)) {
-            ArrayList<Position> positions = snake.getPositions();
+            ArrayList<Position> positions = new ArrayList<Position>();
+
+            for (Position position : snake.getPositions())
+                positions.add(new Position(position));
 
             switch (action) {
                 case MOVE_UP:

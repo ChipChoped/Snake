@@ -7,18 +7,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SnakeGame extends Game {
-    private ArrayList<Snake> initialSnakes;
-    private ArrayList<Item> initialItems;
+    private final ArrayList<Snake> initialSnakes;
+    private final ArrayList<Item> initialItems;
 
     private ArrayList<Snake> snakes;
     private ArrayList<Item> items;
 
-    public SnakeGame(int maxTurn, ArrayList<FeaturesSnake> snakes, ArrayList<FeaturesItem> items) {
+    private boolean withWalls;
+    private int sizeX;
+    private int sizeY;
+
+    public SnakeGame(int maxTurn, ArrayList<FeaturesSnake> snakes, ArrayList<FeaturesItem> items, boolean withWalls, int sizeX, int sizeY) {
         super(maxTurn);
         this.initialSnakes = new ArrayList<>();
         this.initialItems = new ArrayList<>();
         this.snakes = new ArrayList<>();
         this.items = new ArrayList<>();
+        this.withWalls = withWalls;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
 
         for (FeaturesSnake snake : snakes) {
             assert false;
@@ -30,6 +37,8 @@ public class SnakeGame extends Game {
             this.initialItems.add(new Item(item));
         }
 }
+
+    public boolean getWithWalls() { return this.withWalls; }
 
     public ArrayList<FeaturesSnake> getFeaturesSnakes() {
         ArrayList<FeaturesSnake> snakes = new ArrayList<>();
@@ -49,40 +58,49 @@ public class SnakeGame extends Game {
         return items;
     }
 
+    @SuppressWarnings("unchecked")
     public void initializeGame() {
         this.turn = 0;
         this.isRunning = false;
         this.time = 100;
 
-        this.snakes = this.initialSnakes;
-        this.items = this.initialItems;
+        this.snakes = new ArrayList<Snake>();
+
+        for (Snake snake : initialSnakes)
+            this.snakes.add(new Snake(snake));
+
+        this.items = (ArrayList<Item>) this.initialItems.clone();
 
         setChanged();
         notifyObservers();
     }
 
+    @SuppressWarnings("unchecked")
     protected void takeTurn() {
         Random rand = new Random();
-        for (Snake snake : snakes)
+        ArrayList<Snake> otherSnakes;
+
+        for (Snake snake : this.snakes) {
+            otherSnakes = (ArrayList<Snake>) this.snakes.clone();
+            otherSnakes.remove(snake);
+
             switch (rand.nextInt(4)) {
-                case 0:
-                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_UP);
-                    break;
-                case 1:
-                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_DOWN);
-                    break;
-                case 2:
-                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_LEFT);
-                    break;
-                case 3:
-                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_RIGHT);
-                    break;
+                case 0 ->
+                        snake.getBehavior().moveAgent(snake, AgentAction.MOVE_UP, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                case 1 ->
+                        snake.getBehavior().moveAgent(snake, AgentAction.MOVE_DOWN, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                case 2 ->
+                        snake.getBehavior().moveAgent(snake, AgentAction.MOVE_LEFT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                case 3 ->
+                        snake.getBehavior().moveAgent(snake, AgentAction.MOVE_RIGHT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
             }
+        }
     }
 
     public boolean gameContinue() {
         return turn != maxturn;
     }
+
 
     protected void gameOver() {
         System.out.println("Game Over!");
