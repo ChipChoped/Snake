@@ -1,3 +1,5 @@
+package games;
+
 import java.util.Observable;
 
 public abstract class Game extends Observable implements Runnable {
@@ -12,7 +14,7 @@ public abstract class Game extends Observable implements Runnable {
     }
     public int getTurn() { return this.turn; }
 
-    protected abstract void initializeGame();
+    public abstract void initializeGame();
     protected abstract void takeTurn();
     protected abstract boolean gameContinue();
     protected abstract void gameOver();
@@ -28,7 +30,7 @@ public abstract class Game extends Observable implements Runnable {
     }
 
     // Fait avancer les tours en vérifiant l'état du jeu
-    protected void step() {
+    public void step() {
         this.turn++;
 
         if (this.gameContinue())
@@ -43,13 +45,13 @@ public abstract class Game extends Observable implements Runnable {
     }
 
     // Met le jeu en pause
-    protected void pause() {
+    public void pause() {
         this.isRunning = false;
         setChanged();
         notifyObservers();
     }
 
-    protected void setSpeed(int time) {
+    public void setSpeed(int time) {
         this.time = 1000 / time;
     }
 
@@ -66,7 +68,7 @@ public abstract class Game extends Observable implements Runnable {
     }
 
     // Lancement du jeu dans un thread
-    protected void launch() {
+    public void launch() {
         this.isRunning = true;
         setChanged();
         notifyObservers();

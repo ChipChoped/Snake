@@ -1,3 +1,9 @@
+package controllers;
+
+import games.SimpleGame;
+import view.ViewCommand;
+import view.ViewSimpleGame;
+
 public class ControllerSimpleGame extends AbstractController {
     public ControllerSimpleGame(int maxTurn) {
         this.game = new SimpleGame(maxTurn);
@@ -5,23 +11,23 @@ public class ControllerSimpleGame extends AbstractController {
         ViewSimpleGame viewSimpleGame = new ViewSimpleGame(this.game, this);
     }
 
-    void restart() {
+    public void restart() {
         this.game.initializeGame();
     }
 
-    void step() {
+    public void step() {
         this.game.step();
     }
 
-    protected void play() {
+    public void play() {
         this.game.launch();
     }
 
-    void pause() {
+    public void pause() {
         this.game.pause();
     }
 
-    void setSpeed(int speed) {
+    public void setSpeed(int speed) {
         this.game.setSpeed(speed);
     }
 }

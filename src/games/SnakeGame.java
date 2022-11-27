@@ -1,3 +1,6 @@
+package games;
+
+import games.Game;
 import utils.*;
 
 import java.util.ArrayList;
@@ -41,7 +44,7 @@ public class SnakeGame extends Game {
         return items;
     }
 
-    protected void initializeGame() {
+    public void initializeGame() {
         this.turn = 0;
         this.isRunning = false;
         this.time = 100;

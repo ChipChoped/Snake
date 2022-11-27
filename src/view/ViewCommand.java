@@ -1,3 +1,8 @@
+package view;
+
+import controllers.AbstractController;
+import games.SnakeGame;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -73,12 +78,15 @@ public class ViewCommand implements Observer {
         });
 
         stepButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) { controller.step(); }
+            public void actionPerformed(ActionEvent event) {
+                restartButton.setEnabled(true);
+                controller.step();
+            }
         });
 
         pauseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                restartButton.setEnabled(false);
+                restartButton.setEnabled(true);
                 pauseButton.setEnabled(false);
                 playButton.setEnabled(true);
                 stepButton.setEnabled(true);
