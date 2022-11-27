@@ -2,6 +2,7 @@ package view;
 
 import controllers.AbstractController;
 import games.SnakeGame;
+import states.EndState;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -81,6 +82,11 @@ public class ViewCommand implements Observer {
             public void actionPerformed(ActionEvent event) {
                 restartButton.setEnabled(true);
                 controller.step();
+
+                if (controller.getState() instanceof EndState) {
+                    playButton.setEnabled(false);
+                    stepButton.setEnabled(false);
+                }
             }
         });
 

@@ -1,6 +1,7 @@
 package controllers;
 
 import games.Game;
+import states.State;
 
 abstract public class AbstractController {
     protected Game game;
@@ -11,4 +12,6 @@ abstract public class AbstractController {
     public abstract void play();
     public abstract void pause();
     public abstract void setSpeed(int source);
+
+    public abstract State getState();
 }

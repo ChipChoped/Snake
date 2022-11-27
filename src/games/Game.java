@@ -16,13 +16,13 @@ public abstract class Game extends Observable implements Runnable {
 
     public abstract void initializeGame();
     protected abstract void takeTurn();
-    protected abstract boolean gameContinue();
+    public abstract boolean gameContinue();
     protected abstract void gameOver();
 
     // Remise à 0 des valeurs du jeu
     protected void init() {
         this.turn = 0;
-        this.isRunning = false;
+        this.isRunning = true;
         this.initializeGame();
 
         setChanged();

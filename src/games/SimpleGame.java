@@ -20,7 +20,7 @@ public class SimpleGame extends Game {
 
     }
 
-    protected boolean gameContinue() {
+    public boolean gameContinue() {
         return turn != maxturn;
     }
 

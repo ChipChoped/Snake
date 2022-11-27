@@ -20,6 +20,8 @@ public class ControllerSnakeGame extends AbstractController {
         ViewSnakeGame viewSnakeGame = new ViewSnakeGame(this.game, this, panelSnakeGame);
     }
 
+    public State getState() { return this.state; }
+
     public void restart() {
         this.state.restart();
         this.state = new RestartState(this.game);
@@ -30,6 +32,9 @@ public class ControllerSnakeGame extends AbstractController {
 
         if (!(this.state instanceof StepState))
             this.state = new StepState(this.game);
+
+        if (!game.gameContinue())
+            this.state = new EndState(game);
     }
 
     public void play() {

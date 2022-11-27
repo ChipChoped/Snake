@@ -72,7 +72,7 @@ public class SnakeGame extends Game {
             }
     }
 
-    protected boolean gameContinue() {
+    public boolean gameContinue() {
         return turn != maxturn;
     }
 

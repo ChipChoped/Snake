@@ -1,6 +1,8 @@
 package controllers;
 
 import games.SimpleGame;
+import states.RestartState;
+import states.State;
 import view.ViewCommand;
 import view.ViewSimpleGame;
 
@@ -29,5 +31,9 @@ public class ControllerSimpleGame extends AbstractController {
 
     public void setSpeed(int speed) {
         this.game.setSpeed(speed);
+    }
+
+    public State getState() {
+        return new RestartState(this.game);
     }
 }
