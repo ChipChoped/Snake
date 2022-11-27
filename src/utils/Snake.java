@@ -18,5 +18,12 @@ public class Snake extends FeaturesSnake {
         behavior = new NormalBehavior();
     }
 
+    public Snake(Snake snake) {
+        super(new ArrayList<Position>(), snake.getLastAction(), snake.colorSnake, snake.isInvincible, snake.isSick);
+        for (Position position : snake.positions)
+            this.positions.add(new Position(position));
+        behavior = new NormalBehavior();
+    }
+
     public Behavior getBehavior() { return behavior; }
 }
