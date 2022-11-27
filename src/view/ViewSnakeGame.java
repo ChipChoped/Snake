@@ -1,4 +1,7 @@
-import model.InputMap;
+package view;
+
+import controllers.AbstractController;
+import games.SnakeGame;
 import view.PanelSnakeGame;
 
 import javax.swing.*;
@@ -18,14 +21,14 @@ public class ViewSnakeGame implements Observer {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Snake");
-        frame.setSize(new Dimension(700, 700));
+        frame.setSize(new Dimension(panelSnakeGame.getSizeX() * 40, panelSnakeGame.getSizeY() * 40));
         frame.setVisible(true);
 
         Dimension windowSize = frame.getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();
         int dx = centerPoint.x - windowSize.width / 2;
-        int dy = centerPoint.y - windowSize.height / 2 - 350;
+        int dy = centerPoint.y - windowSize.width / 2;
         frame.setLocation(dx,dy);
 
         try {
