@@ -31,11 +31,6 @@ public class NormalBehavior implements Behavior {
         return false;
     }
 
-    public boolean onBorder(Position position, int sizeX, int sizeY) {
-        return position.getX() == 0 || position.getY() == 0 ||
-                position.getX() == sizeX - 1 || position.getY() == sizeY - 1;
-    }
-
     public void moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
         if (isLegalMove(snake, action)) {
             ArrayList<Position> positions = new ArrayList<Position>();
