@@ -74,6 +74,7 @@ public class NormalBehavior implements Behavior {
 
     public void moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
         if (isLegalMove(snake, action)) {
+            AgentAction lastAction = snake.getLastAction();
             ArrayList<Position> positions = new ArrayList<Position>();
 
             for (Position position : snake.getPositions())
@@ -86,27 +87,32 @@ public class NormalBehavior implements Behavior {
                     if (!withWalls && positions.get(0).getY() == 0)
                         move = -sizeY + 1;
                     positions.get(0).setY(positions.get(0).getY() - move);
+                    lastAction = AgentAction.MOVE_UP;
                     break;
                 case MOVE_DOWN:
                     if (!withWalls && positions.get(0).getY() == sizeY - 1)
                         move = -sizeY + 1;
                     positions.get(0).setY(positions.get(0).getY() + move);
+                    lastAction = AgentAction.MOVE_DOWN;
                     break;
                 case MOVE_LEFT:
                     if (!withWalls && positions.get(0).getX() == 0)
                         move = -sizeX + 1;
                     positions.get(0).setX(positions.get(0).getX() - move);
+                    lastAction = AgentAction.MOVE_LEFT;
                     break;
                 case MOVE_RIGHT:
                     if (!withWalls && positions.get(0).getX() == sizeX - 1)
                         move = -sizeX + 1;
                     positions.get(0).setX(positions.get(0).getX() + move);
+                    lastAction = AgentAction.MOVE_RIGHT;
                     break;
             }
 
             // isEliminated(snake, positions.get(0), otherSnakes, sizeX, sizeY, withWalls);
 
             snake.setPositions(positions);
+            snake.setLastAction(lastAction);
         }
     }
 }
