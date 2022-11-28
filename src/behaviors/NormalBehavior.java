@@ -43,25 +43,28 @@ public class NormalBehavior implements Behavior {
             for (Position position : snake.getPositions())
                 positions.add(new Position(position));
 
-            int move[];
-
-            if (onBorder(positions.get(0), sizeX, sizeY))
-                move = new int[]{sizeX - 1, sizeY - 1};
-            else
-                move = new int[]{1, 1};
+            int move = 1;
 
             switch (action) {
                 case MOVE_UP:
-                    positions.get(0).setY(positions.get(0).getY() - move[1]);
+                    if (!withWalls && positions.get(0).getY() == 0)
+                        move = -sizeY + 1;
+                    positions.get(0).setY(positions.get(0).getY() - move);
                     break;
                 case MOVE_DOWN:
-                    positions.get(0).setY(positions.get(0).getY() + move[1]);
+                    if (!withWalls && positions.get(0).getY() == sizeY - 1)
+                        move = -sizeY + 1;
+                    positions.get(0).setY(positions.get(0).getY() + move);
                     break;
                 case MOVE_LEFT:
-                    positions.get(0).setX(positions.get(0).getX() - move[0]);
+                    if (!withWalls && positions.get(0).getX() == 0)
+                        move = -sizeX + 1;
+                    positions.get(0).setX(positions.get(0).getX() - move);
                     break;
                 case MOVE_RIGHT:
-                    positions.get(0).setX(positions.get(0).getX() + move[0]);
+                    if (!withWalls && positions.get(0).getX() == sizeX - 1)
+                        move = -sizeX + 1;
+                    positions.get(0).setX(positions.get(0).getX() + move);
                     break;
             }
 
