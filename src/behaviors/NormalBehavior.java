@@ -1,10 +1,9 @@
 package behaviors;
 
-import utils.AgentAction;
-import utils.Position;
-import utils.Snake;
+import utils.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class NormalBehavior implements Behavior {
     public boolean isLegalMove(Snake snake, AgentAction action) {
@@ -25,6 +24,48 @@ public class NormalBehavior implements Behavior {
         for (Snake otherSnake : otherSnakes)
             if (otherSnake.getPositions().contains(position)) {
                 System.out.println("Collision");
+                return true;
+            }
+
+        return false;
+    }
+
+    public boolean onItem(Snake snake, Position position, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWall) {
+        for (Item item : items)
+            if (item.getX() == position.getX() && item.getY() == position.getY()) {
+                switch (item.getItemType()) {
+                    case APPLE:
+                        Random randApple = new Random();
+                        if (pItem <= randApple.nextInt(101)) {
+                            int border = 1;
+                            ItemType type;
+
+                            if (withWall)
+                                border = 0;
+
+                            if (randApple.nextBoolean())
+                                type = ItemType.SICK_BALL;
+                            else
+                                type = ItemType.INVINCIBILITY_BALL;
+
+                            items.add(new Item(new Random().nextInt(sizeX) + border,
+                                    new Random().nextInt(sizeY) + border, type));
+                        }
+                        break;
+                    case SICK_BALL:
+                        snake.setBehavior(new SickBehavior());
+                        break;
+                    case INVINCIBILITY_BALL:
+                        snake.setBehavior(new InvincibleBehavior());
+                        break;
+                    case BOX:
+                        Random randBox = new Random();
+                        if (randBox.nextBoolean())
+                            snake.setBehavior(new SickBehavior());
+                        else
+                            snake.setBehavior(new InvincibleBehavior());
+                }
+
                 return true;
             }
 

@@ -1,6 +1,7 @@
 package behaviors;
 
 import utils.AgentAction;
+import utils.Item;
 import utils.Position;
 import utils.Snake;
 
@@ -28,6 +29,10 @@ public class SickBehavior implements Behavior {
                 return true;
             }
 
+        return false;
+    }
+    
+    public boolean onItem(Snake snake, Position position, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWall) {
         return false;
     }
 
