@@ -85,14 +85,18 @@ public class SnakeGame extends Game {
             otherSnakes.remove(snake);
 
             switch (rand.nextInt(4)) {
-                case 0 ->
-                        snake.getBehavior().moveAgent(snake, AgentAction.MOVE_UP, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
-                case 1 ->
-                        snake.getBehavior().moveAgent(snake, AgentAction.MOVE_DOWN, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
-                case 2 ->
-                        snake.getBehavior().moveAgent(snake, AgentAction.MOVE_LEFT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
-                case 3 ->
-                        snake.getBehavior().moveAgent(snake, AgentAction.MOVE_RIGHT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                case 0:
+                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_UP, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                    break;
+                case 1:
+                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_DOWN, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                    break;
+                case 2:
+                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_LEFT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                    break;
+                case 3:
+                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_RIGHT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                    break;
             }
         }
     }
