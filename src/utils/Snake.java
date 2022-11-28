@@ -25,5 +25,6 @@ public class Snake extends FeaturesSnake {
         behavior = new NormalBehavior();
     }
 
-    public Behavior getBehavior() { return behavior; }
+    public Behavior getBehavior() { return this.behavior; }
+    public void setBehavior(Behavior behavior) { this.behavior = behavior; }
 }
