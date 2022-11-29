@@ -61,22 +61,27 @@ public class NormalBehavior implements Behavior {
 
                         if (itemGenerated != null)
                             items.add(itemGenerated);
-                        break;
+
+                        items.remove(item);
+                        return true;
                     case SICK_BALL:
                         snake.setBehavior(new SickBehavior());
-                        break;
+                        items.remove(item);
+                        return true;
                     case INVINCIBILITY_BALL:
                         snake.setBehavior(new InvincibleBehavior());
-                        break;
+                        items.remove(item);
+                        return true;
                     case BOX:
                         Random randBox = new Random();
                         if (randBox.nextBoolean())
                             snake.setBehavior(new SickBehavior());
                         else
                             snake.setBehavior(new InvincibleBehavior());
-                }
 
-                return true;
+                        items.remove(item);
+                        return true;
+                }
             }
 
         return false;
