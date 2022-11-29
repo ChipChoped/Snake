@@ -30,27 +30,38 @@ public class InvincibleBehavior implements Behavior {
         return false;
     }
 
-    public boolean onItem(Snake snake, Position position, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWall) {
+    public Item eatApple(Snake snake, int pItem, int sizeX, int sizeY, boolean withWalls) {
+        Random randApple = new Random();
+        if (randApple.nextInt(101) <= pItem) {
+            int border = 1;
+            ItemType type;
+
+            if (withWalls)
+                border = 0;
+
+            if (randApple.nextBoolean())
+                type = ItemType.SICK_BALL;
+            else
+                type = ItemType.INVINCIBILITY_BALL;
+
+            snake.getPositions().add(snake.getPositions().get(snake.getPositions().size() - 1));
+
+            return new Item(new Random().nextInt(sizeX) + border,
+                    new Random().nextInt(sizeY) + border, type);
+        }
+
+        return null;
+    }
+
+    public boolean onItem(Snake snake, Position position, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
         for (Item item : items)
             if (item.getX() == position.getX() && item.getY() == position.getY()) {
                 switch (item.getItemType()) {
                     case APPLE:
-                        Random randApple = new Random();
-                        if (pItem <= randApple.nextInt(101)) {
-                            int border = 1;
-                            ItemType type;
+                        Item itemGenerated = eatApple(snake, pItem, sizeX, sizeY, withWalls);
 
-                            if (withWall)
-                                border = 0;
-
-                            if (randApple.nextBoolean())
-                                type = ItemType.SICK_BALL;
-                            else
-                                type = ItemType.INVINCIBILITY_BALL;
-
-                            items.add(new Item(new Random().nextInt(sizeX) + border,
-                                    new Random().nextInt(sizeY) + border, type));
-                        }
+                        if (itemGenerated != null)
+                            items.add(itemGenerated);
                         break;
                     case SICK_BALL:
                         snake.setBehavior(new SickBehavior());
@@ -72,7 +83,7 @@ public class InvincibleBehavior implements Behavior {
         return false;
     }
 
-    public boolean moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
+    public boolean moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, ArrayList<Item> items, int sizeX, int sizeY, boolean withWalls) {
         if (isLegalMove(snake, action)) {
             AgentAction lastAction = snake.getLastAction();
             ArrayList<Position> positions = new ArrayList<Position>();
@@ -110,6 +121,11 @@ public class InvincibleBehavior implements Behavior {
             }
 
             if (!isEliminated(snake, positions.get(0), otherSnakes, sizeX, sizeY, withWalls)) {
+                onItem(snake, positions.get(0), items, 50, sizeX, sizeY, withWalls);
+
+                for (int i = 1; i < positions.size(); i++)
+                    positions.set(i, positions.get(i - 1));
+
                 snake.setPositions(positions);
                 snake.setLastAction(lastAction);
             }

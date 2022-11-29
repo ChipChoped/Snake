@@ -28,12 +28,18 @@ public class SickBehavior implements Behavior {
 
         return false;
     }
-    
+
+    public Item eatApple(Snake snake, int pItem, int sizeX, int sizeY, boolean withWalls) {
+        // Can't eat apples :C
+        return null;
+    }
+
     public boolean onItem(Snake snake, Position position, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWall) {
+        // Can't take items anymore :C
         return false;
     }
 
-    public boolean moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
+    public boolean moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, ArrayList<Item> items, int sizeX, int sizeY, boolean withWalls) {
         if (isLegalMove(snake, action)) {
             AgentAction lastAction = snake.getLastAction();
             ArrayList<Position> positions = new ArrayList<Position>();

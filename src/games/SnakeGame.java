@@ -91,16 +91,16 @@ public class SnakeGame extends Game {
             else {
                 switch (rand.nextInt(4)) {
                     case 0:
-                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_UP, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_UP, otherSnakes, this.items, this.sizeX, this.sizeY, this.withWalls);
                         break;
                     case 1:
-                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_DOWN, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_DOWN, otherSnakes, this.items, this.sizeX, this.sizeY, this.withWalls);
                         break;
                     case 2:
-                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_LEFT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_LEFT, otherSnakes, this.items, this.sizeX, this.sizeY, this.withWalls);
                         break;
                     case 3:
-                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_RIGHT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_RIGHT, otherSnakes, this.items, this.sizeX, this.sizeY, this.withWalls);
                         break;
                 }
 

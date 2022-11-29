@@ -11,7 +11,7 @@ public class ControllerSnakeGame extends AbstractController {
     private State state;
 
     public ControllerSnakeGame(int maxTurn) throws Exception {
-        InputMap map = new InputMap("layout/arena.lay");
+        InputMap map = new InputMap("layout/arenaNoWall.lay");
         PanelSnakeGame panelSnakeGame = new PanelSnakeGame(map.getSizeX(), map.getSizeY(), map.get_walls(), map.getStart_snakes(), map.getStart_items());
         this.game = new SnakeGame(maxTurn, map.getStart_snakes(), map.getStart_items(), map.get_walls()[0][0], map.getSizeX(), map.getSizeY());
         this.state = new RestartState(game);
