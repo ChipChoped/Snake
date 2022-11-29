@@ -109,11 +109,12 @@ public class InvincibleBehavior implements Behavior {
                     break;
             }
 
-            // isEliminated(snake, positions.get(0), otherSnakes, sizeX, sizeY, withWalls);
-
-            snake.setPositions(positions);
+            if (!isEliminated(snake, positions.get(0), otherSnakes, sizeX, sizeY, withWalls)) {
+                snake.setPositions(positions);
+                snake.setLastAction(lastAction);
+            }
         }
 
-        return false;
+        return true;
     }
 }

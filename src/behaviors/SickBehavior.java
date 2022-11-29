@@ -16,16 +16,13 @@ public class SickBehavior implements Behavior {
     }
 
     public boolean isEliminated(Snake snake, Position position, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
-        if (withWalls)
-            if (position.getX() == 0 || position.getY() == 0 ||
-                    position.getX() == sizeX - 1 || position.getY() == sizeY - 1) {
-                System.out.println("Wall");
-                return true;
-            }
+        if (withWalls && (position.getX() == 0 || position.getY() == 0 ||
+                position.getX() == sizeX - 1 || position.getY() == sizeY - 1)) {
+            return true;
+        }
 
         for (Snake otherSnake : otherSnakes)
             if (otherSnake.getPositions().contains(position)) {
-                System.out.println("Collision");
                 return true;
             }
 
@@ -73,11 +70,16 @@ public class SickBehavior implements Behavior {
                     break;
             }
 
-            // isEliminated(snake, positions.get(0), otherSnakes, sizeX, sizeY, withWalls);
+            if (!isEliminated(snake, positions.get(0), otherSnakes, sizeX, sizeY, withWalls)) {
+                snake.setPositions(positions);
+                snake.setLastAction(lastAction);
 
-            snake.setPositions(positions);
+                return true;
+            }
+            else
+                return false;
         }
 
-        return false;
+        return true;
     }
 }

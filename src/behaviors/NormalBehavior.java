@@ -14,12 +14,11 @@ public class NormalBehavior implements Behavior {
     }
 
     public boolean isEliminated(Snake snake, Position position, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
-        if (withWalls)
-            if (position.getX() == 0 || position.getY() == 0 ||
-                position.getX() == sizeX - 1 || position.getY() == sizeY - 1) {
-                System.out.println("Wall");
-                return true;
-            }
+        if (withWalls && (position.getX() == 0 || position.getY() == 0 ||
+            position.getX() == sizeX - 1 || position.getY() == sizeY - 1)) {
+            System.out.println("Wall");
+            return true;
+        }
 
         for (Snake otherSnake : otherSnakes)
             if (otherSnake.getPositions().contains(position)) {
@@ -72,7 +71,7 @@ public class NormalBehavior implements Behavior {
         return false;
     }
 
-    public void moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
+    public boolean moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
         if (isLegalMove(snake, action)) {
             AgentAction lastAction = snake.getLastAction();
             ArrayList<Position> positions = new ArrayList<Position>();
@@ -109,10 +108,16 @@ public class NormalBehavior implements Behavior {
                     break;
             }
 
-            // isEliminated(snake, positions.get(0), otherSnakes, sizeX, sizeY, withWalls);
+            if (!isEliminated(snake, positions.get(0), otherSnakes, sizeX, sizeY, withWalls)) {
+                snake.setPositions(positions);
+                snake.setLastAction(lastAction);
 
-            snake.setPositions(positions);
-            snake.setLastAction(lastAction);
+                return true;
+            }
+            else
+                return false;
         }
+
+        return true;
     }
 }

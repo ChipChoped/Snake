@@ -77,27 +77,45 @@ public class SnakeGame extends Game {
     @SuppressWarnings("unchecked")
     protected void takeTurn() {
         Random rand = new Random();
-        ArrayList<Snake> otherSnakes;
+        ArrayList<Snake> otherSnakes = new ArrayList<>();
+        ArrayList<Snake> eleminatedSnakes = new ArrayList<>();
+        boolean eleminated = false;
 
-        for (Snake snake : this.snakes) {
+        for (int i = 0; i < this.snakes.size(); i++) {
             otherSnakes = (ArrayList<Snake>) this.snakes.clone();
-            otherSnakes.remove(snake);
+            otherSnakes.remove(i);
+            otherSnakes.removeAll(eleminatedSnakes);
 
-            switch (rand.nextInt(4)) {
-                case 0:
-                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_UP, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
-                    break;
-                case 1:
-                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_DOWN, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
-                    break;
-                case 2:
-                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_LEFT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
-                    break;
-                case 3:
-                    snake.getBehavior().moveAgent(snake, AgentAction.MOVE_RIGHT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
-                    break;
+            if (eleminatedSnakes.contains(this.snakes.get(i)))
+                i++;
+            else {
+                switch (rand.nextInt(4)) {
+                    case 0:
+                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_UP, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                        break;
+                    case 1:
+                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_DOWN, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                        break;
+                    case 2:
+                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_LEFT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                        break;
+                    case 3:
+                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_RIGHT, otherSnakes, this.sizeX, this.sizeY, this.withWalls);
+                        break;
+                }
+
+                ArrayList<Snake> difference = new ArrayList<>(this.snakes);
+                difference.removeAll(otherSnakes);
+
+                if (!eleminated) {
+                    difference.remove(this.snakes.get(i));
+                }
+
+                eleminatedSnakes.addAll(difference);
             }
         }
+
+        this.snakes.removeAll(eleminatedSnakes);
     }
 
     public boolean gameContinue() {
