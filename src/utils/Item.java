@@ -11,4 +11,8 @@ public class Item extends FeaturesItem {
     public Item(FeaturesItem item) {
         super(item.getX(), item.getY(), item.getItemType());
     }
+
+    public Item(Item item) {
+        super(item.getX(), item.getY(), item.getItemType());
+    }
 }

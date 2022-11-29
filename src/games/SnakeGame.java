@@ -64,11 +64,13 @@ public class SnakeGame extends Game {
         this.time = 100;
 
         this.snakes = new ArrayList<Snake>();
+        this.items = new ArrayList<Item>();
 
         for (Snake snake : initialSnakes)
             this.snakes.add(new Snake(snake));
 
-        this.items = (ArrayList<Item>) this.initialItems.clone();
+        for (Item item : initialItems)
+            this.items.add(new Item(item));
 
         setChanged();
         notifyObservers();
