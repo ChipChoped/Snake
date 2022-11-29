@@ -30,7 +30,7 @@ public class InvincibleBehavior implements Behavior {
         return false;
     }
 
-    public Item eatApple(Snake snake, int pItem, int sizeX, int sizeY, boolean withWalls) {
+    public Item eatApple(Snake snake, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
         Random randApple = new Random();
         if (randApple.nextInt(101) <= pItem) {
             int border = 1;
@@ -46,8 +46,19 @@ public class InvincibleBehavior implements Behavior {
 
             snake.getPositions().add(snake.getPositions().get(snake.getPositions().size() - 1));
 
-            return new Item(new Random().nextInt(sizeX) + border,
-                    new Random().nextInt(sizeY) + border, type);
+            int x;
+            int y;
+            ArrayList<Position> itemsPositions = new ArrayList<>();
+
+            for (Item item : items)
+                itemsPositions.add(new Position(item.getX(), item.getY()));
+
+            do {
+                x = new Random().nextInt(sizeX) + border;
+                y = new Random().nextInt(sizeY) + border;
+            } while (itemsPositions.contains(new Position(x, y)));
+
+            return new Item(x, y, type);
         }
 
         return null;
@@ -58,26 +69,31 @@ public class InvincibleBehavior implements Behavior {
             if (item.getX() == position.getX() && item.getY() == position.getY()) {
                 switch (item.getItemType()) {
                     case APPLE:
-                        Item itemGenerated = eatApple(snake, pItem, sizeX, sizeY, withWalls);
+                        Item itemGenerated = eatApple(snake, items, pItem, sizeX, sizeY, withWalls);
 
                         if (itemGenerated != null)
                             items.add(itemGenerated);
-                        break;
+
+                        items.remove(item);
+                        return true;
                     case SICK_BALL:
                         snake.setBehavior(new SickBehavior());
-                        break;
+                        items.remove(item);
+                        return true;
                     case INVINCIBILITY_BALL:
                         snake.setBehavior(new InvincibleBehavior());
-                        break;
+                        items.remove(item);
+                        return true;
                     case BOX:
                         Random randBox = new Random();
                         if (randBox.nextBoolean())
                             snake.setBehavior(new SickBehavior());
                         else
                             snake.setBehavior(new InvincibleBehavior());
-                }
 
-                return true;
+                        items.remove(item);
+                        return true;
+                }
             }
 
         return false;

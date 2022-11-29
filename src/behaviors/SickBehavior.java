@@ -29,7 +29,7 @@ public class SickBehavior implements Behavior {
         return false;
     }
 
-    public Item eatApple(Snake snake, int pItem, int sizeX, int sizeY, boolean withWalls) {
+    public Item eatApple(Snake snake, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
         // Can't eat apples :C
         return null;
     }
