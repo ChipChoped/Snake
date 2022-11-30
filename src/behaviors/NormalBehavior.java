@@ -16,14 +16,25 @@ public class NormalBehavior implements Behavior {
     public boolean isEliminated(Snake snake, Position position, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
         if (withWalls && (position.getX() == 0 || position.getY() == 0 ||
             position.getX() == sizeX - 1 || position.getY() == sizeY - 1)) {
-            System.out.println("Wall");
             return true;
         }
 
+        for (int i = 2; i < snake.getPositions().size() - 1; i++)
+            if (Snake.collision(position, snake.getPositions().get(i)))
+                return true;
+
         for (Snake otherSnake : otherSnakes)
             if (otherSnake.getPositions().contains(position)) {
-                System.out.println("Collision");
-                return true;
+                if (Snake.collision(position, otherSnake.getPositions().get(0)) &&
+                    snake.getPositions().size() == otherSnake.getPositions().size()) {
+                    otherSnakes.remove(otherSnake);
+                    return true;
+                } else if (snake.getPositions().size() >= otherSnake.getPositions().size()) {
+                    otherSnakes.remove(otherSnake);
+                    return false;
+                } else {
+                    return true;
+                }
             }
 
         return false;

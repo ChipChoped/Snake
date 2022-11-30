@@ -27,4 +27,8 @@ public class Snake extends FeaturesSnake {
 
     public Behavior getBehavior() { return this.behavior; }
     public void setBehavior(Behavior behavior) { this.behavior = behavior; }
+
+    public static boolean collision(Position position1, Position position2) {
+        return (position1.getX() == position2.getX() && position1.getY() == position2.getY());
+    }
 }
