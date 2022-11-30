@@ -58,6 +58,7 @@ public class NormalBehavior implements Behavior {
 
             int x;
             int y;
+            int cap = 0;
             ArrayList<Position> itemsPositions = new ArrayList<>();
 
             for (Item item : items)
@@ -66,7 +67,8 @@ public class NormalBehavior implements Behavior {
             do {
                 x = new Random().nextInt(sizeX) + border;
                 y = new Random().nextInt(sizeY) + border;
-            } while (itemsPositions.contains(new Position(x, y)));
+                cap++;
+            } while (itemsPositions.contains(new Position(x, y)) && cap < 10);
 
             return new Item(x, y, type);
         }
