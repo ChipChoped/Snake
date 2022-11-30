@@ -49,10 +49,14 @@ public class NormalBehavior implements Behavior {
             if (withWalls)
                 border = 0;
 
-            if (randApple.nextBoolean())
+            int randItem = randApple.nextInt(3);
+
+            if (randItem == 0)
                 type = ItemType.SICK_BALL;
-            else
+            else if (randItem == 1)
                 type = ItemType.INVINCIBILITY_BALL;
+            else
+                type = ItemType.BOX;
 
             snake.getPositions().add(new Position(snake.getPositions().get(snake.getPositions().size() - 1)));
 
