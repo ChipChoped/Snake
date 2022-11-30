@@ -12,6 +12,7 @@ public class SnakeGame extends Game {
     private ArrayList<Snake> snakes;
     private ArrayList<Item> items;
 
+    private boolean allSnakesEliminated;
     private boolean withWalls;
     private int sizeX;
     private int sizeY;
@@ -60,8 +61,9 @@ public class SnakeGame extends Game {
     @SuppressWarnings("unchecked")
     public void initializeGame() {
         this.turn = 0;
-        this.isRunning = false;
         this.time = 100;
+        this.isRunning = false;
+        this.allSnakesEliminated = false;
 
         this.snakes = new ArrayList<Snake>();
         this.items = new ArrayList<Item>();
@@ -118,10 +120,13 @@ public class SnakeGame extends Game {
         }
 
         this.snakes.removeAll(eleminatedSnakes);
+
+        if (this.snakes.size() == 0)
+            this.allSnakesEliminated = true;
     }
 
     public boolean gameContinue() {
-        return turn != maxturn;
+        return turn != maxturn && !allSnakesEliminated;
     }
 
 
