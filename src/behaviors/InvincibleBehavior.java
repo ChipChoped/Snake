@@ -44,7 +44,7 @@ public class InvincibleBehavior implements Behavior {
             else
                 type = ItemType.INVINCIBILITY_BALL;
 
-            snake.getPositions().add(snake.getPositions().get(snake.getPositions().size() - 1));
+            snake.getPositions().add(new Position(snake.getPositions().get(snake.getPositions().size() - 1)));
 
             int x;
             int y;
@@ -136,8 +136,8 @@ public class InvincibleBehavior implements Behavior {
             if (!isEliminated(snake, position, otherSnakes, sizeX, sizeY, withWalls)) {
                 onItem(snake, position, items, 100, sizeX, sizeY, withWalls);
 
-                for (int i = 1; i < snake.getPositions().size(); i++)
-                    snake.getPositions().set(i, snake.getPositions().get(i - 1));
+                for (int i = snake.getPositions().size() - 1; i > 0; i--)
+                    snake.getPositions().set(i, snake.getPositions().get(i-1));
 
                 snake.getPositions().set(0, position);
                 snake.setLastAction(lastAction);
