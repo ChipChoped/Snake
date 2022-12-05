@@ -2,7 +2,6 @@ package view;
 
 import controllers.AbstractController;
 import games.SnakeGame;
-import view.PanelSnakeGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +42,7 @@ public class ViewSnakeGame implements Observer {
     
     public void update(Observable observable, Object o) {
         SnakeGame game = (SnakeGame) observable;
-        this.panelSnakeGame.updateInfoGame(game.getFeaturesSnakes(), game.getItems());
+        this.panelSnakeGame.updateInfoGame(game.getFeaturesSnakes(), game.getFeaturesItems());
         frame.repaint();
     }
 }
