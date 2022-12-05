@@ -1,5 +1,7 @@
 package games;
 
+import strategies.RandomStrategy;
+import strategies.Strategy;
 import utils.*;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ public class SnakeGame extends Game {
     private ArrayList<Snake> snakes;
     private ArrayList<Item> items;
 
+    private Strategy strategy;
+
     private boolean allSnakesEliminated;
     private boolean withWalls;
     private int sizeX;
@@ -23,6 +27,7 @@ public class SnakeGame extends Game {
         this.initialItems = new ArrayList<>();
         this.snakes = new ArrayList<>();
         this.items = new ArrayList<>();
+        this.strategy = new RandomStrategy();
         this.withWalls = withWalls;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -39,6 +44,11 @@ public class SnakeGame extends Game {
 }
 
     public boolean getWithWalls() { return this.withWalls; }
+    public ArrayList<Snake> getSnakes() { return this.snakes; }
+    public ArrayList<Item> getItems() { return  this.items; }
+    public int getSizeX() { return this.sizeX; }
+    public int getSizeY() { return this.sizeY; }
+    public void setAllSnakesEliminated(boolean eliminated) { this.allSnakesEliminated = eliminated; }
 
     public ArrayList<FeaturesSnake> getFeaturesSnakes() {
         ArrayList<FeaturesSnake> snakes = new ArrayList<>();
@@ -49,7 +59,7 @@ public class SnakeGame extends Game {
         return snakes;
     }
 
-    public ArrayList<FeaturesItem> getItems() {
+    public ArrayList<FeaturesItem> getFeaturesItems() {
         ArrayList<FeaturesItem> items = new ArrayList<>();
 
         for (Item item : this.items)
@@ -80,55 +90,12 @@ public class SnakeGame extends Game {
 
     @SuppressWarnings("unchecked")
     protected void takeTurn() {
-        Random rand = new Random();
-        ArrayList<Snake> otherSnakes = new ArrayList<>();
-        ArrayList<Snake> eleminatedSnakes = new ArrayList<>();
-        boolean eleminated = false;
-
-        for (int i = 0; i < this.snakes.size(); i++) {
-            otherSnakes = (ArrayList<Snake>) this.snakes.clone();
-            otherSnakes.remove(i);
-            otherSnakes.removeAll(eleminatedSnakes);
-
-            if (eleminatedSnakes.contains(this.snakes.get(i)))
-                i++;
-            else {
-                switch (rand.nextInt(4)) {
-                    case 0:
-                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_UP, otherSnakes, this.items, this.sizeX, this.sizeY, this.withWalls);
-                        break;
-                    case 1:
-                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_DOWN, otherSnakes, this.items, this.sizeX, this.sizeY, this.withWalls);
-                        break;
-                    case 2:
-                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_LEFT, otherSnakes, this.items, this.sizeX, this.sizeY, this.withWalls);
-                        break;
-                    case 3:
-                        eleminated = !this.snakes.get(i).getBehavior().moveAgent(this.snakes.get(i), AgentAction.MOVE_RIGHT, otherSnakes, this.items, this.sizeX, this.sizeY, this.withWalls);
-                        break;
-                }
-
-                ArrayList<Snake> difference = new ArrayList<>(this.snakes);
-                difference.removeAll(otherSnakes);
-
-                if (!eleminated) {
-                    difference.remove(this.snakes.get(i));
-                }
-
-                eleminatedSnakes.addAll(difference);
-            }
-        }
-
-        this.snakes.removeAll(eleminatedSnakes);
-
-        if (this.snakes.size() == 0)
-            this.allSnakesEliminated = true;
+        this.strategy.move(this);
     }
 
     public boolean gameContinue() {
         return turn != maxturn && !allSnakesEliminated;
     }
-
 
     protected void gameOver() {
         System.out.println("Game Over!");
