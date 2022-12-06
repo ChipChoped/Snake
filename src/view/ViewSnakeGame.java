@@ -2,6 +2,7 @@ package view;
 
 import controllers.AbstractController;
 import games.SnakeGame;
+import strategies.MoveKeyListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,8 @@ public class ViewSnakeGame implements Observer {
         frame.setTitle("Snake");
         frame.setSize(new Dimension(panelSnakeGame.getSizeX() * 40, panelSnakeGame.getSizeY() * 40));
         frame.setVisible(true);
+        frame.addKeyListener(new MoveKeyListener());
+        frame.requestFocus();
 
         Dimension windowSize = frame.getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -44,5 +47,6 @@ public class ViewSnakeGame implements Observer {
         SnakeGame game = (SnakeGame) observable;
         this.panelSnakeGame.updateInfoGame(game.getFeaturesSnakes(), game.getFeaturesItems());
         frame.repaint();
+        frame.requestFocus();
     }
 }
