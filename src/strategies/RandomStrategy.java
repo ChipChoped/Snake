@@ -7,7 +7,7 @@ import utils.Snake;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RandomStrategy extends Strategy {
+public class RandomStrategy implements Strategy {
     public void move(SnakeGame game) {
         Random rand = new Random();
         ArrayList<Snake> otherSnakes = new ArrayList<>();
