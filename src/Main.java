@@ -1,8 +1,8 @@
-import view.ViewMenuGame;
+import view.ViewGameMenu;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        ViewMenuGame viewMenuGame = new ViewMenuGame();
+        ViewGameMenu viewGameMenu = new ViewGameMenu();
     }
 }
