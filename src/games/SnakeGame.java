@@ -1,5 +1,6 @@
 package games;
 
+import strategies.InteractiveStrategy;
 import strategies.RandomStrategy;
 import strategies.Strategy;
 import utils.*;
@@ -27,7 +28,7 @@ public class SnakeGame extends Game {
         this.initialItems = new ArrayList<>();
         this.snakes = new ArrayList<>();
         this.items = new ArrayList<>();
-        this.strategy = new RandomStrategy();
+        this.strategy = new InteractiveStrategy();
         this.withWalls = withWalls;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
