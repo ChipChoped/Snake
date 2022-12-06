@@ -22,14 +22,14 @@ public class SnakeGame extends Game {
     private int sizeX;
     private int sizeY;
 
-    public SnakeGame(int maxTurn, ArrayList<FeaturesSnake> snakes, ArrayList<FeaturesItem> items, boolean withWalls, int sizeX, int sizeY) {
+    public SnakeGame(int maxTurn, ArrayList<FeaturesSnake> snakes, ArrayList<FeaturesItem> items, boolean withWalls, int sizeX, int sizeY, Strategy strategy) {
         super(maxTurn);
         this.initialSnakes = new ArrayList<>();
         this.initialItems = new ArrayList<>();
         this.snakes = new ArrayList<>();
         this.items = new ArrayList<>();
-        this.strategy = new InteractiveStrategy();
         this.withWalls = withWalls;
+        this.strategy = strategy;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
 
