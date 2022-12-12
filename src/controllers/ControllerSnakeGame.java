@@ -3,6 +3,7 @@ package controllers;
 import games.SnakeGame;
 import model.InputMap;
 import states.*;
+import strategies.Strategy;
 import view.PanelSnakeGame;
 import view.ViewCommand;
 import view.ViewSnakeGame;
@@ -10,16 +11,17 @@ import view.ViewSnakeGame;
 public class ControllerSnakeGame extends AbstractController {
     private State state;
 
-    public ControllerSnakeGame(int maxTurn) throws Exception {
-        InputMap map = new InputMap("layout/arenaNoWall.lay");
+    public ControllerSnakeGame(int maxTurn, Strategy strategy, String mapPath) throws Exception {
+        InputMap map = new InputMap(mapPath);
         PanelSnakeGame panelSnakeGame = new PanelSnakeGame(map.getSizeX(), map.getSizeY(), map.get_walls(), map.getStart_snakes(), map.getStart_items());
-        this.game = new SnakeGame(maxTurn, map.getStart_snakes(), map.getStart_items(), map.get_walls()[0][0], map.getSizeX(), map.getSizeY());
+        this.game = new SnakeGame(maxTurn, map.getStart_snakes(), map.getStart_items(), map.get_walls()[0][0], map.getSizeX(), map.getSizeY(), strategy);
         this.state = new RestartState(game);
 
         ViewCommand viewCommand = new ViewCommand(this.game, this);
         ViewSnakeGame viewSnakeGame = new ViewSnakeGame(this.game, this, panelSnakeGame);
     }
 
+    public SnakeGame getGame() { return (SnakeGame) this.game; }
     public State getState() { return this.state; }
 
     public void restart() {

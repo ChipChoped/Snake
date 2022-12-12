@@ -16,6 +16,8 @@ public class SnakeGame extends Game {
     private ArrayList<Item> items;
 
     private Strategy strategy;
+    private AgentAction p1NextMove;
+    private AgentAction p2NextMove;
 
     private boolean allSnakesEliminated;
     private boolean withWalls;
@@ -49,6 +51,10 @@ public class SnakeGame extends Game {
     public ArrayList<Item> getItems() { return  this.items; }
     public int getSizeX() { return this.sizeX; }
     public int getSizeY() { return this.sizeY; }
+    public Strategy getStrategy() { return this.strategy; }
+
+    public void setP1NextMove(AgentAction nextMove) { this.p1NextMove = nextMove; }
+    public void setP2NextMove(AgentAction nextMove) { this.p2NextMove = nextMove; }
     public void setAllSnakesEliminated(boolean eliminated) { this.allSnakesEliminated = eliminated; }
 
     public ArrayList<FeaturesSnake> getFeaturesSnakes() {
