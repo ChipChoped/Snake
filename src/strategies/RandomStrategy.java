@@ -10,7 +10,7 @@ import java.util.Random;
 public class RandomStrategy implements Strategy {
     public void move(SnakeGame game) {
         Random rand = new Random();
-        ArrayList<Snake> otherSnakes = new ArrayList<>();
+        ArrayList<Snake> otherSnakes;
         ArrayList<Snake> eleminatedSnakes = new ArrayList<>();
         boolean eliminated = false;
 
