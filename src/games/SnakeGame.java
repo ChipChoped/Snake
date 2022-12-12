@@ -15,9 +15,8 @@ public class SnakeGame extends Game {
     private ArrayList<Snake> snakes;
     private ArrayList<Item> items;
 
+    private ArrayList<AgentAction> nextMoves;
     private Strategy strategy;
-    private AgentAction p1NextMove;
-    private AgentAction p2NextMove;
 
     private boolean allSnakesEliminated;
     private boolean withWalls;
@@ -28,6 +27,7 @@ public class SnakeGame extends Game {
         super(maxTurn);
         this.initialSnakes = new ArrayList<>();
         this.initialItems = new ArrayList<>();
+        this.nextMoves = new ArrayList<>();
         this.snakes = new ArrayList<>();
         this.items = new ArrayList<>();
         this.withWalls = withWalls;
@@ -36,25 +36,24 @@ public class SnakeGame extends Game {
         this.sizeY = sizeY;
 
         for (FeaturesSnake snake : snakes) {
-            assert false;
             this.initialSnakes.add(new Snake(snake));
+            this.nextMoves.add(snake.getLastAction());
         }
 
-        for (FeaturesItem item : items) {
-            assert false;
+        for (FeaturesItem item : items)
             this.initialItems.add(new Item(item));
-        }
 }
 
-    public boolean getWithWalls() { return this.withWalls; }
     public ArrayList<Snake> getSnakes() { return this.snakes; }
     public ArrayList<Item> getItems() { return  this.items; }
-    public int getSizeX() { return this.sizeX; }
-    public int getSizeY() { return this.sizeY; }
+
+    public ArrayList<AgentAction> getNextMoves() { return this.nextMoves; }
     public Strategy getStrategy() { return this.strategy; }
 
-    public void setP1NextMove(AgentAction nextMove) { this.p1NextMove = nextMove; }
-    public void setP2NextMove(AgentAction nextMove) { this.p2NextMove = nextMove; }
+    public boolean getWithWalls() { return this.withWalls; }
+    public int getSizeX() { return this.sizeX; }
+    public int getSizeY() { return this.sizeY; }
+
     public void setAllSnakesEliminated(boolean eliminated) { this.allSnakesEliminated = eliminated; }
 
     public ArrayList<FeaturesSnake> getFeaturesSnakes() {
