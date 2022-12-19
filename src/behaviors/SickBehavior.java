@@ -11,8 +11,8 @@ public class SickBehavior extends Behavior {
     @Override
     protected boolean moveIfNotEliminated(Snake snake, Position position, AgentAction lastAction, ArrayList<Snake> otherSnakes, ArrayList<Item> items, int sizeX, int sizeY, boolean withWalls) {
         if (!isEliminated(snake, position, otherSnakes, sizeX, sizeY, withWalls)) {
-            for (int i = 1; i < snake.getPositions().size(); i++)
-                snake.getPositions().set(i, snake.getPositions().get(i - 1));
+            for (int i = snake.getPositions().size() - 1; i > 0; i--)
+                snake.getPositions().set(i, snake.getPositions().get(i-1));
 
             snake.getPositions().set(0, position);
             snake.setLastAction(lastAction);
