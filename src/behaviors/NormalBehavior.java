@@ -116,54 +116,53 @@ public class NormalBehavior implements Behavior {
     }
 
     public boolean moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, ArrayList<Item> items, int sizeX, int sizeY, boolean withWalls) {
-        if (isLegalMove(snake, action)) {
-            AgentAction lastAction = snake.getLastAction();
-            Position position = new Position(snake.getPositions().get(0));
+        if (!isLegalMove(snake, action))
+            action = snake.getLastAction();
 
-            int move = 1;
+        AgentAction lastAction = snake.getLastAction();
+        Position position = new Position(snake.getPositions().get(0));
 
-            switch (action) {
-                case MOVE_UP:
-                    if (!withWalls && position.getY() == 0)
-                        move = -sizeY + 1;
-                    position.setY(position.getY() - move);
-                    lastAction = AgentAction.MOVE_UP;
-                    break;
-                case MOVE_DOWN:
-                    if (!withWalls && position.getY() == sizeY - 1)
-                        move = -sizeY + 1;
-                    position.setY(position.getY() + move);
-                    lastAction = AgentAction.MOVE_DOWN;
-                    break;
-                case MOVE_LEFT:
-                    if (!withWalls && position.getX() == 0)
-                        move = -sizeX + 1;
-                    position.setX(position.getX() - move);
-                    lastAction = AgentAction.MOVE_LEFT;
-                    break;
-                case MOVE_RIGHT:
-                    if (!withWalls && position.getX() == sizeX - 1)
-                        move = -sizeX + 1;
-                    position.setX(position.getX() + move);
-                    lastAction = AgentAction.MOVE_RIGHT;
-                    break;
-            }
+        int move = 1;
 
-            if (!isEliminated(snake, position, otherSnakes, sizeX, sizeY, withWalls)) {
-                onItem(snake, position, items, 100, sizeX, sizeY, withWalls);
-
-                for (int i = snake.getPositions().size() - 1; i > 0; i--)
-                    snake.getPositions().set(i, snake.getPositions().get(i-1));
-
-                snake.getPositions().set(0, position);
-                snake.setLastAction(lastAction);
-
-                return true;
-            }
-            else
-                return false;
+        switch (action) {
+            case MOVE_UP:
+                if (!withWalls && position.getY() == 0)
+                    move = -sizeY + 1;
+                position.setY(position.getY() - move);
+                lastAction = AgentAction.MOVE_UP;
+                break;
+            case MOVE_DOWN:
+                if (!withWalls && position.getY() == sizeY - 1)
+                    move = -sizeY + 1;
+                position.setY(position.getY() + move);
+                lastAction = AgentAction.MOVE_DOWN;
+                break;
+            case MOVE_LEFT:
+                if (!withWalls && position.getX() == 0)
+                    move = -sizeX + 1;
+                position.setX(position.getX() - move);
+                lastAction = AgentAction.MOVE_LEFT;
+                break;
+            case MOVE_RIGHT:
+                if (!withWalls && position.getX() == sizeX - 1)
+                    move = -sizeX + 1;
+                position.setX(position.getX() + move);
+                lastAction = AgentAction.MOVE_RIGHT;
+                break;
         }
 
-        return true;
+        if (!isEliminated(snake, position, otherSnakes, sizeX, sizeY, withWalls)) {
+            onItem(snake, position, items, 100, sizeX, sizeY, withWalls);
+
+            for (int i = snake.getPositions().size() - 1; i > 0; i--)
+                snake.getPositions().set(i, snake.getPositions().get(i-1));
+
+            snake.getPositions().set(0, position);
+            snake.setLastAction(lastAction);
+
+            return true;
+        }
+        else
+            return false;
     }
 }
