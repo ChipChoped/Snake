@@ -53,14 +53,33 @@ public abstract class Behavior {
         return false;
     }
 
-    protected Item eatApple(Snake snake, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
+    protected ArrayList<Item> eatApple(Snake snake, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
+        int x;
+        int y;
+        int border = 0;
         Random randApple = new Random();
-        if (randApple.nextInt(101) <= pItem) {
-            int border = 1;
-            ItemType type;
+        ArrayList<Item> newItems = new ArrayList<>();
+        ArrayList<Position> unavailablePositions = new ArrayList<>();
 
-            if (withWalls)
-                border = 0;
+        if (withWalls)
+            border = 1;
+
+        for (Item item : items)
+            unavailablePositions.add(new Position(item.getX(), item.getY()));
+
+        unavailablePositions.addAll(snake.getPositions());
+
+        do {
+            x = new Random().nextInt(border, sizeX + border);
+            y = new Random().nextInt(border, sizeY + border);
+        } while (unavailablePositions.contains(new Position(x, y)));
+
+        unavailablePositions.add(new Position(x, y));
+        newItems.add(new Item(x, y, ItemType.APPLE));
+
+        if (randApple.nextInt(101) <= pItem) {
+
+            ItemType type;
 
             int randItem = randApple.nextInt(3);
 
@@ -73,24 +92,15 @@ public abstract class Behavior {
 
             snake.getPositions().add(new Position(snake.getPositions().get(snake.getPositions().size() - 1)));
 
-            int x;
-            int y;
-            int cap = 0;
-            ArrayList<Position> itemsPositions = new ArrayList<>();
-
-            for (Item item : items)
-                itemsPositions.add(new Position(item.getX(), item.getY()));
-
             do {
                 x = new Random().nextInt(sizeX) + border;
                 y = new Random().nextInt(sizeY) + border;
-                cap++;
-            } while (itemsPositions.contains(new Position(x, y)) && cap < 10);
+            } while (unavailablePositions.contains(new Position(x, y)));
 
-            return new Item(x, y, type);
+            newItems.add(new Item(x, y, type));
         }
 
-        return null;
+        return newItems;
     }
 
     protected boolean onItem(Snake snake, Position position, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
@@ -98,11 +108,8 @@ public abstract class Behavior {
             if (item.getX() == position.getX() && item.getY() == position.getY()) {
                 switch (item.getItemType()) {
                     case APPLE:
-                        Item itemGenerated = eatApple(snake, items,pItem, sizeX, sizeY, withWalls);
-
-                        if (itemGenerated != null)
-                            items.add(itemGenerated);
-
+                        ArrayList<Item> itemsGenerated = eatApple(snake, items,pItem, sizeX, sizeY, withWalls);
+                        items.addAll(itemsGenerated);
                         items.remove(item);
                         return true;
                     case SICK_BALL:
