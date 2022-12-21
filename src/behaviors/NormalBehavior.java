@@ -7,6 +7,11 @@ import java.util.Random;
 
 public class NormalBehavior extends Behavior {
     @Override
+    protected boolean effectStillOn() {
+        return true;
+    }
+
+    @Override
     protected boolean moveIfNotEliminated(Snake snake, Position position, AgentAction lastAction, ArrayList<Snake> otherSnakes, ArrayList<Item> items, int sizeX, int sizeY, boolean withWalls) {
         if (!isEliminated(snake, position, otherSnakes, sizeX, sizeY, withWalls)) {
             onItem(snake, position, items, 100, sizeX, sizeY, withWalls);

@@ -6,14 +6,27 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Behavior {
-    public boolean isLegalMove(Snake snake, AgentAction action) {
+    private int effectTurnCount;
+
+    public Behavior() { this.effectTurnCount = 0; }
+
+    protected boolean effectStillOn() {
+        if (this.effectTurnCount == 20)
+            return false;
+        else {
+            this.effectTurnCount++;
+            return true;
+        }
+    }
+
+    protected boolean isLegalMove(Snake snake, AgentAction action) {
         return (action == AgentAction.MOVE_UP && snake.getLastAction() != AgentAction.MOVE_DOWN) ||
                 (action == AgentAction.MOVE_DOWN && snake.getLastAction() != AgentAction.MOVE_UP) ||
                 (action == AgentAction.MOVE_LEFT && snake.getLastAction() != AgentAction.MOVE_RIGHT ||
                 (action == AgentAction.MOVE_RIGHT && snake.getLastAction() != AgentAction.MOVE_LEFT));
     }
 
-    public boolean isEliminated(Snake snake, Position position, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
+    protected boolean isEliminated(Snake snake, Position position, ArrayList<Snake> otherSnakes, int sizeX, int sizeY, boolean withWalls) {
         if (withWalls && (position.getX() == 0 || position.getY() == 0 ||
                 position.getX() == sizeX - 1 || position.getY() == sizeY - 1)) {
             return true;
@@ -40,7 +53,7 @@ public abstract class Behavior {
         return false;
     }
 
-    public Item eatApple(Snake snake, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
+    protected Item eatApple(Snake snake, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
         Random randApple = new Random();
         if (randApple.nextInt(101) <= pItem) {
             int border = 1;
@@ -80,7 +93,7 @@ public abstract class Behavior {
         return null;
     }
 
-    public boolean onItem(Snake snake, Position position, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
+    protected boolean onItem(Snake snake, Position position, ArrayList<Item> items, int pItem, int sizeX, int sizeY, boolean withWalls) {
         for (Item item : items)
             if (item.getX() == position.getX() && item.getY() == position.getY()) {
                 switch (item.getItemType()) {
@@ -116,6 +129,9 @@ public abstract class Behavior {
     }
 
     public boolean moveAgent(Snake snake, AgentAction action, ArrayList<Snake> otherSnakes, ArrayList<Item> items, int sizeX, int sizeY, boolean withWalls) {
+        if (!snake.getBehavior().effectStillOn())
+            snake.setBehavior(new NormalBehavior());
+
         if (!isLegalMove(snake, action))
             action = snake.getLastAction();
 
