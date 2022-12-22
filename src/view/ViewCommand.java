@@ -1,6 +1,7 @@
 package view;
 
 import controllers.AbstractController;
+import controllers.ControllerSnakeGame;
 import games.SnakeGame;
 import states.EndState;
 
@@ -14,10 +15,10 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class ViewCommand implements Observer {
-    protected AbstractController controller;
+    protected ControllerSnakeGame controller;
     protected JLabel turnNumberLabel = new JLabel("Turn : 0", JLabel.CENTER);
 
-    public ViewCommand(Observable obs, AbstractController controller) {
+    public ViewCommand(Observable obs, ControllerSnakeGame controller) {
         obs.addObserver(this);
         this.controller = controller;
 
@@ -37,11 +38,18 @@ public class ViewCommand implements Observer {
         JPanel gameCommandsPanel = new JPanel();
         JPanel turnCommandPanel = new JPanel();
         JPanel turnSliderPanel = new JPanel();
+        JPanel gameInfoPanel = new JPanel();
+        JPanel playersPanel = new JPanel();
+        JPanel player1Panel = new JPanel();
+        JPanel lives1Panel = new JPanel();
 
         mainPanel.setLayout(new GridLayout(2, 1));
         gameCommandsPanel.setLayout(new GridLayout(1, 4));
         turnCommandPanel.setLayout(new GridLayout(1, 2));
         turnSliderPanel.setLayout(new GridLayout(2, 1));
+        gameInfoPanel.setLayout(new GridLayout(2, 1));
+        playersPanel.setLayout(new GridLayout(1, 2));
+        player1Panel.setLayout(new GridLayout(2, 1));
 
         Icon restartIcon = new ImageIcon("icons/icon_restart.png");
         Icon playIcon = new ImageIcon("icons/icon_play.png");
@@ -107,7 +115,6 @@ public class ViewCommand implements Observer {
         gameCommandsPanel.add(pauseButton);
 
         JLabel turnSliderLabel = new JLabel("Number of turns per second", JLabel.CENTER);
-        ////////
 
         JSlider turnSlider = new JSlider();
         turnSlider.setMinimum(1);
@@ -122,11 +129,56 @@ public class ViewCommand implements Observer {
             }
         });
 
+        ImageIcon heartIcon = new ImageIcon("images/heart.png");
+        Image heartImage = heartIcon.getImage();
+        Image resizedHeartImage = heartImage.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
+        heartIcon = new ImageIcon(resizedHeartImage);
+
+        JLabel player1Label = new JLabel("Player 1", JLabel.CENTER);
+        JLabel heartLabel1 = new JLabel(heartIcon);
+        JLabel heartLabel2 = new JLabel(heartIcon);
+        JLabel heartLabel3 = new JLabel(heartIcon);
+
+        lives1Panel.add(heartLabel1);
+        lives1Panel.add(heartLabel2);
+        lives1Panel.add(heartLabel3);
+
+        player1Panel.add(player1Label);
+        player1Panel.add(lives1Panel);
+
+        playersPanel.add(player1Panel);
+
+        if (this.controller.getGame().getInitialSnakes().size() >= 2) {
+            JPanel player2Panel = new JPanel();
+            JPanel lives2Panel = new JPanel();
+
+            player2Panel.setLayout(new GridLayout(2, 1));
+
+            JLabel player2Label = new JLabel("Player 2", JLabel.CENTER);
+            JLabel heartLabel4 = new JLabel(heartIcon);
+            JLabel heartLabel5 = new JLabel(heartIcon);
+            JLabel heartLabel6 = new JLabel(heartIcon);
+
+            lives2Panel.add(heartLabel4);
+            lives2Panel.add(heartLabel5);
+            lives2Panel.add(heartLabel6);
+
+            player2Panel.add(player2Label);
+            player2Panel.add(lives2Panel);
+
+            playersPanel.add(player2Panel);
+        }
+        else
+            playersPanel.setLayout(new GridLayout(2, 1));
+
+        gameInfoPanel.add(turnNumberLabel);
+        gameInfoPanel.add(playersPanel);
+
         turnSliderPanel.add(turnSliderLabel);
         turnSliderPanel.add(turnSlider);
 
         turnCommandPanel.add(turnSliderPanel);
-        turnCommandPanel.add(turnNumberLabel);
+        turnCommandPanel.add(gameInfoPanel);
 
         mainPanel.add(gameCommandsPanel);
         mainPanel.add(turnCommandPanel);
@@ -138,6 +190,5 @@ public class ViewCommand implements Observer {
     public void update(Observable observable, Object o) {
         SnakeGame game = (SnakeGame) observable;
         turnNumberLabel.setText("Turn : " + game.getTurn());
-        //turnNumberLabel = new JLabel("Turn : " + controller.getGame().getTurn(), JLabel.CENTER);
     }
 }
