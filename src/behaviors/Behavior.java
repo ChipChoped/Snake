@@ -70,8 +70,8 @@ public abstract class Behavior {
         unavailablePositions.addAll(snake.getPositions());
 
         do {
-            x = new Random().nextInt(border, sizeX + border);
-            y = new Random().nextInt(border, sizeY + border);
+            x = new Random().nextInt(sizeX + border - 1) - border;
+            y = new Random().nextInt(sizeY + border - 1) - border;
         } while (unavailablePositions.contains(new Position(x, y)));
 
         unavailablePositions.add(new Position(x, y));

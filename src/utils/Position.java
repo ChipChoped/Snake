@@ -24,9 +24,11 @@ public class Position {
 			return true;
 		}
 
-		if (!(obj instanceof Position p)) {
+		if (!(obj instanceof Position)) {
 			return false;
 		}
+
+		Position p = (Position) obj;
 
 		return this.x == p.x && this.y == p.y;
 	}
