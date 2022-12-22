@@ -178,4 +178,5 @@ public abstract class Behavior {
     }
 
     protected abstract boolean moveIfNotEliminated(Snake snake, Position position, AgentAction lastAction, ArrayList<Snake> otherSnakes, ArrayList<Item> items, int sizeX, int sizeY, boolean withWalls);
+    public abstract Behaviors getBehaviorType();
 }

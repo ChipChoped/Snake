@@ -22,4 +22,9 @@ public class SickBehavior extends Behavior {
         else
             return false;
     }
+
+    @Override
+    public Behaviors getBehaviorType() {
+        return Behaviors.SICK;
+    }
 }

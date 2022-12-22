@@ -3,7 +3,6 @@ package behaviors;
 import utils.*;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class InvincibleBehavior extends Behavior {
     @Override
@@ -19,5 +18,10 @@ public class InvincibleBehavior extends Behavior {
         }
 
         return true;
+    }
+
+    @Override
+    public Behaviors getBehaviorType() {
+        return Behaviors.INVINCIBLE;
     }
 }

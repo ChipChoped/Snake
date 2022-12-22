@@ -3,7 +3,6 @@ package behaviors;
 import utils.*;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class NormalBehavior extends Behavior {
     @Override
@@ -26,5 +25,10 @@ public class NormalBehavior extends Behavior {
         }
         else
             return false;
+    }
+
+    @Override
+    public Behaviors getBehaviorType() {
+        return Behaviors.NORMAL;
     }
 }

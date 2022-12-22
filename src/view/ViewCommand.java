@@ -1,5 +1,6 @@
 package view;
 
+import behaviors.Behaviors;
 import controllers.ControllerSnakeGame;
 import games.SnakeGame;
 import states.EndState;
@@ -29,6 +30,13 @@ public class ViewCommand implements Observer {
 
     protected int numberOfPlayers = 1;
 
+    protected ImageIcon heartIcon;
+    protected ImageIcon sickHeartIcon;
+    protected ImageIcon invincibleHeartIcon;
+
+    protected Behaviors player1Behavior = Behaviors.NORMAL;
+    protected Behaviors player2Behavior = Behaviors.NORMAL;
+
     public ViewCommand(Observable obs, ControllerSnakeGame controller) {
         obs.addObserver(this);
         this.controller = controller;
@@ -41,7 +49,7 @@ public class ViewCommand implements Observer {
         Dimension windowSize = frame.getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();
-        int dx = centerPoint.x - windowSize.width /2;
+        int dx = centerPoint.x - windowSize.width / 2;
         int dy = centerPoint.y - windowSize.height / 2 + 350;
         frame.setLocation(dx,dy);
 
@@ -70,11 +78,21 @@ public class ViewCommand implements Observer {
         Icon stepIcon = new ImageIcon("icons/icon_step.png");
         Icon pauseIcon = new ImageIcon("icons/icon_pause.png");
 
-        ImageIcon heartIcon = new ImageIcon("images/heart.png");
+        heartIcon = new ImageIcon("images/heart.png");
         Image heartImage = heartIcon.getImage();
         Image resizedHeartImage = heartImage.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
         heartIcon = new ImageIcon(resizedHeartImage);
         ImageIcon finalHeartIcon = heartIcon;
+
+        sickHeartIcon = new ImageIcon("images/sickHeart.png");
+        Image sickHeartImage = sickHeartIcon.getImage();
+        Image resizedSickHeartImage = sickHeartImage.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
+        sickHeartIcon = new ImageIcon(resizedSickHeartImage);
+
+        invincibleHeartIcon = new ImageIcon("images/invincibleHeart.png");
+        Image invincibleHeartImage = invincibleHeartIcon.getImage();
+        Image resizedInvincibleHeartImage = invincibleHeartImage.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
+        invincibleHeartIcon = new ImageIcon(resizedInvincibleHeartImage);
 
         JButton restartButton = new JButton(restartIcon);
         JButton playButton = new JButton(playIcon);
@@ -224,6 +242,23 @@ public class ViewCommand implements Observer {
         frame.setVisible(true);
     }
 
+    private void updatePlayerBehavior(Behaviors behavior, ArrayList<JLabel> hearts) {
+        switch (behavior) {
+            case NORMAL:
+                for (JLabel heart : hearts)
+                    heart.setIcon(this.heartIcon);
+                break;
+            case SICK:
+                for (JLabel heart : hearts)
+                    heart.setIcon(this.sickHeartIcon);
+                break;
+            case INVINCIBLE:
+                for (JLabel heart : hearts)
+                    heart.setIcon(this.invincibleHeartIcon);
+                break;
+        }
+    }
+
     private void updatePlayersLives(ArrayList<Snake> snakes) {
         boolean greenSnakeAlive = false;
         boolean redSnakeAlive = false;
@@ -240,10 +275,20 @@ public class ViewCommand implements Observer {
                 this.player1HeartLabels.get(this.player1HeartLabels.size() - 1).setVisible(false);
                 this.player1HeartLabels.remove(this.player1HeartLabels.size() - 1);
 
-                if (this.player1HeartLabels.size() == 0)
+                if (this.player1HeartLabels.size() == 0) {
                     this.player1Alive = false;
+                }
                 else
-                    this.controller.getGame().getSnakes().add(new Snake(this.controller.getGame().getInitialSnakes().get(0)));
+                    this.controller.getGame().getSnakes().add(0, new Snake(this.controller.getGame().getInitialSnakes().get(0)));
+            }
+
+            if (this.player1Alive && greenSnakeAlive) {
+                Behaviors behavior = snakes.get(0).getBehavior().getBehaviorType();
+
+                if (behavior != this.player1Behavior) {
+                    this.player1Behavior = behavior;
+                    updatePlayerBehavior(behavior, this.player1HeartLabels);
+                }
             }
         }
 
@@ -256,7 +301,25 @@ public class ViewCommand implements Observer {
                     if (this.player2HeartLabels.size() == 0)
                         this.player2Alive = false;
                     else
-                        this.controller.getGame().getSnakes().add(new Snake(this.controller.getGame().getInitialSnakes().get(1)));
+                        if (this.controller.getGame().getSnakes().size() > 1)
+                            this.controller.getGame().getSnakes().add(1, new Snake(this.controller.getGame().getInitialSnakes().get(1)));
+                        else {
+                            this.controller.getGame().getSnakes().add(new Snake(this.controller.getGame().getInitialSnakes().get(1)));
+                        }
+                }
+
+                if (this.player2Alive && redSnakeAlive) {
+                    Behaviors behavior;
+
+                    if (snakes.size() == 1)
+                         behavior = snakes.get(0).getBehavior().getBehaviorType();
+                    else
+                        behavior = snakes.get(1).getBehavior().getBehaviorType();
+
+                    if (behavior != this.player2Behavior) {
+                        this.player2Behavior = behavior;
+                        updatePlayerBehavior(behavior, this.player2HeartLabels);
+                    }
                 }
             }
         }
