@@ -95,7 +95,7 @@ public class ViewGameMenu {
                 frame.dispose();
                 
                 try {
-                    ControllerSnakeGame controller = new ControllerSnakeGame(50, chosenStrategy, chosenMapPath);
+                    ControllerSnakeGame controller = new ControllerSnakeGame(500, chosenStrategy, chosenMapPath);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
