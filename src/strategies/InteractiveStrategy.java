@@ -40,8 +40,5 @@ public class InteractiveStrategy implements Strategy {
         }
 
         game.getSnakes().removeAll(eleminatedSnakes);
-
-        if (game.getSnakes().size() == 0)
-            game.setAllSnakesEliminated(true);
     }
 }
