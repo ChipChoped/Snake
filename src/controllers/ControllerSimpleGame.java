@@ -9,7 +9,7 @@ import view.ViewSimpleGame;
 public class ControllerSimpleGame extends AbstractController {
     public ControllerSimpleGame(int maxTurn) {
         this.game = new SimpleGame(maxTurn);
-        ViewCommand viewCommand = new ViewCommand(this.game, this);
+        //ViewCommand viewCommand = new ViewCommand(this.game, this);
         ViewSimpleGame viewSimpleGame = new ViewSimpleGame(this.game, this);
     }
 
