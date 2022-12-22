@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 
 public class ViewGameMenu {
     private GameMode chosenMode = GameMode.MANUAL;
-    private String chosenMapPath = System.getProperty("user.dir") + "/layout/arena.lay";
+    private String chosenMapPath = System.getProperty("user.dir") + "/layout/arenaNoWall.lay";
     private String chosenMapName = "arena";
     private int numberOfTurns = 500;
 
