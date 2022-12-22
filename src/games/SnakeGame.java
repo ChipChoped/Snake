@@ -16,12 +16,12 @@ public class SnakeGame extends Game {
     private ArrayList<Item> items;
 
     private ArrayList<AgentAction> nextMoves;
-    private Strategy strategy;
+    private final Strategy strategy;
 
     private boolean allSnakesEliminated;
-    private boolean withWalls;
-    private int sizeX;
-    private int sizeY;
+    private final boolean withWalls;
+    private final int sizeX;
+    private final int sizeY;
 
     public SnakeGame(int maxTurn, ArrayList<FeaturesSnake> snakes, ArrayList<FeaturesItem> items, boolean withWalls, int sizeX, int sizeY, Strategy strategy) {
         super(maxTurn);
@@ -44,6 +44,7 @@ public class SnakeGame extends Game {
             this.initialItems.add(new Item(item));
 }
 
+    public ArrayList<Snake> getInitialSnakes() { return this.initialSnakes; }
     public ArrayList<Snake> getSnakes() { return this.snakes; }
     public ArrayList<Item> getItems() { return  this.items; }
 
@@ -74,7 +75,6 @@ public class SnakeGame extends Game {
         return items;
     }
 
-    @SuppressWarnings("unchecked")
     public void initializeGame() {
         this.turn = 0;
         this.time = 100;
@@ -94,13 +94,15 @@ public class SnakeGame extends Game {
         notifyObservers();
     }
 
-    @SuppressWarnings("unchecked")
     protected void takeTurn() {
         this.strategy.move(this);
+
+        setChanged();
+        notifyObservers();
     }
 
     public boolean gameContinue() {
-        return turn != maxturn && !allSnakesEliminated;
+        return turn != maxturn && snakes.size() > 0;
     }
 
     protected void gameOver() {
