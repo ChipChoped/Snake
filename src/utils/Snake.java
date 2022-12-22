@@ -13,11 +13,6 @@ public class Snake extends FeaturesSnake {
         behavior = new NormalBehavior();
     }
 
-    public Snake(FeaturesSnake snake) {
-        super(snake.getPositions(), snake.getLastAction(), snake.getColorSnake(), snake.isInvincible(), snake.isSick());
-        behavior = new NormalBehavior();
-    }
-
     public Snake(Snake snake) {
         super(new ArrayList<Position>(), snake.getLastAction(), snake.colorSnake, snake.isInvincible, snake.isSick);
         for (Position position : snake.positions)

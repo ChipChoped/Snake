@@ -36,7 +36,7 @@ public class SnakeGame extends Game {
         this.sizeY = sizeY;
 
         for (FeaturesSnake snake : snakes) {
-            this.initialSnakes.add(new Snake(snake));
+            this.initialSnakes.add(SnakeFactory.featureSnakeToSnake(snake));
             this.nextMoves.add(snake.getLastAction());
         }
 
