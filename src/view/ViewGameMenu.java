@@ -15,6 +15,7 @@ public class ViewGameMenu {
     private GameMode chosenMode = GameMode.MANUAL;
     private String chosenMapPath = System.getProperty("user.dir") + "/layout/arena.lay";
     private String chosenMapName = "arena";
+    private int numberOfTurns = 500;
 
     public ViewGameMenu() {
         JFrame frame = new JFrame();
@@ -30,16 +31,20 @@ public class ViewGameMenu {
         frame.setLocation(dx,dy);
 
         JPanel mainPanel = new JPanel();
-        JPanel gameModePanel = new JPanel();
-        JPanel radioButtonsPanel = new JPanel();
-        JPanel filePanel = new JPanel();
+        JPanel leftPanel = new JPanel();
         JPanel rightPanel = new JPanel();
+        JPanel radioButtonsPanel = new JPanel();
+        JPanel turnPanel = new JPanel();
+        JPanel resizePanel = new JPanel();
+        JPanel filePanel = new JPanel();
 
         mainPanel.setLayout(new GridLayout(1, 2));
-        gameModePanel.setLayout(new GridLayout(2, 1));
-        radioButtonsPanel.setLayout(new GridLayout(1, 2));
-        filePanel.setLayout(new GridLayout(4, 1));
+        leftPanel.setLayout(new GridLayout(3, 1));
         rightPanel.setLayout(new GridLayout(2, 1));
+        radioButtonsPanel.setLayout(new GridLayout(1, 2));
+        turnPanel.setLayout(new GridLayout(1, 2));
+        turnPanel.setLayout(new GridLayout(3, 1));
+        filePanel.setLayout(new GridLayout(4, 1));
 
         JLabel gameModeLabel = new JLabel("Choose which game mode you want to play in :", JLabel.CENTER);
 
@@ -60,6 +65,9 @@ public class ViewGameMenu {
 
         manualModeRadio.setSelected(true);
         ButtonGroup gameModeRadioGroup = new ButtonGroup();
+
+        JLabel turnLabel = new JLabel("Number of turns : ");
+        JTextField turnField = new JTextField(String.valueOf(this.numberOfTurns), 3);
 
         JLabel fileChooserLabel = new JLabel("Choose which map you want to play in :", JLabel.CENTER);
         JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir") + "/layout");
@@ -92,10 +100,12 @@ public class ViewGameMenu {
                         chosenStrategy = new RandomStrategy();
                 }
 
+                numberOfTurns = Integer.parseInt(turnField.getText());
+
                 frame.dispose();
                 
                 try {
-                    ControllerSnakeGame controller = new ControllerSnakeGame(500, chosenStrategy, chosenMapPath);
+                    ControllerSnakeGame controller = new ControllerSnakeGame(numberOfTurns, chosenStrategy, chosenMapPath);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -109,9 +119,15 @@ public class ViewGameMenu {
         radioButtonsPanel.add(randomModeRadio);
         radioButtonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        gameModePanel.add(gameModeLabel);
-        gameModePanel.add(radioButtonsPanel);
-        gameModePanel.setBorder(BorderFactory.createTitledBorder("Game Mode"));
+        resizePanel.add(turnField);
+
+        turnPanel.add(turnLabel);
+        turnPanel.add(turnField);
+
+        leftPanel.add(gameModeLabel);
+        leftPanel.add(radioButtonsPanel);
+        leftPanel.add(turnPanel);
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Game Mode"));
 
         filePanel.add(fileChooserLabel);
         filePanel.add(fileButton);
@@ -121,7 +137,7 @@ public class ViewGameMenu {
         rightPanel.add(filePanel);
         rightPanel.add(playButton);
 
-        mainPanel.add(gameModePanel);
+        mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
 
         frame.add(mainPanel);
